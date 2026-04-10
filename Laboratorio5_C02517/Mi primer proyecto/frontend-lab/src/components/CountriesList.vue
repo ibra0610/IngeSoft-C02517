@@ -29,6 +29,7 @@ is-fullwidth"
 </template>
 
 <script>
+import axios from "axios";
     export default {
         name: "CountriesList",
         data() { 
@@ -46,9 +47,18 @@ is-fullwidth"
             removeCountry(index) {
                 this.countries.splice(index, 1);
                 // de https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
-            }
+            },
+
+            getCountries() {
+                axios.get("https://localhost:7053/api/country").then((response) => { //Aqui cambie el puerto ya que el mio es 7053
+                        this.countries = response.data;
+                });
+            },
         },
-    }
+        created: function() {
+            this.getCountries();
+        },
+    };
 </script>
 
 <style lang="scss" scoped>
